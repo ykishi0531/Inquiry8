@@ -9,7 +9,7 @@
   <!-- ================================================ Form Bean Definitions -->
 
   <form-beans>
-    <form-bean name="helloForm" type="jp.co.sakusaku.inquiry8.actionform.HelloForm">
+    <form-bean name="helloForm" type="jp.co.sakusaku.inquiry8.actionForm.HelloForm">
     </form-bean>
   </form-beans>
 
