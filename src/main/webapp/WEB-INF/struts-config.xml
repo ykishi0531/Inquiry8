@@ -11,6 +11,8 @@
   <form-beans>
     <form-bean name="helloForm" type="jp.co.sakusaku.inquiry8.actionForm.HelloForm">
     </form-bean>
+    <form-bean name="inquiryForm" type="jp.co.sakusaku.inquiry8.actionForm.InquiryForm">
+    </form-bean>
   </form-beans>
 
   <!-- ========================================= Global Exception Definitions -->
@@ -29,16 +31,25 @@
       scope="request" validate="true" input="/hello.jsp">
     <forward name="success" path="/hello.jsp" />
     </action>
+    <action path="/inquiry"
+      type="jp.co.sakusaku.inquiry8.action.InquiryAction" name="inquiryForm"
+      scope="request" validate="true" input="/inquiry.jsp">
+    <forward name="success" path="/inquiry_confirm.jsp" />
+    </action>
   </action-mappings>
 
   <!-- ======================================== Message Resources Definitions -->
 
-  <!-- <message-resources parameter="MessageResources" /> -->
+  <message-resources parameter="MessageResources1" />
 
   <!-- =============================================== Plug Ins Configuration -->
 
   <!-- ======================================================= Tiles plugin -->
 
   <!-- =================================================== Validator plugin -->
-
+  <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+    <set-property property="pathnames"
+        value="/org/apache/struts/validator/validator-rules.xml,
+               /WEB-INF/validation.xml" />
+  </plug-in>
 </struts-config>
