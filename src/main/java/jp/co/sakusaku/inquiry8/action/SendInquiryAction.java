@@ -25,7 +25,7 @@ public class SendInquiryAction extends Action {
 	private final String CREATE_INQUIRY_TABLE = 
 			"CREATE TABLE IF NOT EXISTS inquiry (id INTEGER PRIMARY KEY AUTOINCREMENT, title VARCHAR(32), name VARCHAR(20), tel VARCHAR(13), content TEXT)";
 	private final String INSERT_INQUIRY_TABLE = 
-			"INSERT INTO inquiry (title, name, tel, content) values(?, ?, ?, ?)";
+			"INSERT INTO inquiry (title, name, tel, content) VALUES(?, ?, ?, ?)";
 	private final String SELECT_INQUIRY_ALL_RECORD = "SELECT * FROM inquiry";
 
 	  @Override
@@ -38,7 +38,6 @@ public class SendInquiryAction extends Action {
 		  
 		  Connection connection = null;
 		  try {
-			  // create a database connection
 			  connection = DriverManager.getConnection("jdbc:sqlite:C:/sqlite/inquiry.db");
 			  Statement statement = connection.createStatement();
 			  statement.setQueryTimeout(30);
@@ -72,11 +71,9 @@ public class SendInquiryAction extends Action {
 					  connection.close();
 				  }
 			  } catch(SQLException e) {
-				  // connection close failed.
 				  e.printStackTrace();
 			  }
 		  }
-		  req.setAttribute("form", inquiryForm);
 		  req.setAttribute("list", dtoList);
 
 		  return mapping.findForward("success");
