@@ -52,24 +52,37 @@ td.center {
 </head>
 <body>
     <h1>お問い合わせ内容確認</h1>
+    <html:form action="/inquiry/send" method="post">
     <table>
         <tr>
             <th>題名</th>
-            <td><bean:write name="form" property="title" /></td>
+            <td><bean:write name="form" property="title" />
+            <html:hidden name="form" property="title" />
+            </td>
         </tr>
         <tr>
             <th>名前</th>
-            <td><bean:write name="form" property="name" /></td>
+            <td><bean:write name="form" property="name" />
+            <html:hidden name="form" property="name" />
+            </td>
         </tr>
         <tr>
             <th>電話番号</th>
-            <td><bean:write name="form" property="tel" /></td>
+            <td><bean:write name="form" property="tel" />
+            <html:hidden name="form" property="tel" />
+            </td>
         </tr>
         <tr>
             <th>お問い合わせ内容</th>
-            <td><bean:write name="form" property="content" /></td>
+            <td><bean:write name="form" property="content" />
+            <html:hidden name="form" property="content" />
+            </td>
         </tr>
+            <tr>
+                <td colspan="2" class="center"><input type="submit" value="登録"></td>
+            </tr>
+        </table>
     </table>
-
+	</html:form>
 </body>
 </html:html>

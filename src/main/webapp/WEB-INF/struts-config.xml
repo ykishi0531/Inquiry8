@@ -36,6 +36,11 @@
       scope="request" validate="true" input="/inquiry.jsp">
     <forward name="success" path="/inquiry_confirm.jsp" />
     </action>
+    <action path="/inquiry/send"
+      type="jp.co.sakusaku.inquiry8.action.SendInquiryAction" name="inquiryForm"
+      scope="request" validate="true" input="/inquiry.jsp">
+    <forward name="success" path="/inquiry_complete.jsp" />
+    </action>
   </action-mappings>
 
   <!-- ======================================== Message Resources Definitions -->
