@@ -36,7 +36,7 @@ public class SendInquiryAction extends Action {
 		  List<InquiryDto> dtoList = new ArrayList<>();
 		  
 		  // ラムダ式
-		  Function<ResultSet, InquiryDto> rambdaTest = rs -> {
+		  Function<ResultSet, InquiryDto> lambdaTest = rs -> {
 			  InquiryDto dto = new InquiryDto();
 			  try {
 				  dto.setId(rs.getInt("id"));
@@ -68,7 +68,7 @@ public class SendInquiryAction extends Action {
 		  	  ResultSet rs = statement.executeQuery(SELECT_INQUIRY_ALL_RECORD);
 		  	  
 			  while(rs.next()) {
-				  dtoList.add(rambdaTest.apply(rs));
+				  dtoList.add(lambdaTest.apply(rs));
 			  }
 		  } catch (SQLException e) {
 			  e.printStackTrace();
