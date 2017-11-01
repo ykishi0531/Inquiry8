@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,46 +35,45 @@ public class SendInquiryAction extends Action {
 		  InquiryForm inquiryForm = (InquiryForm)form;
 		  List<InquiryDto> dtoList = new ArrayList<>();
 		  
-		  Class.forName("org.sqlite.JDBC");
-		  
-		  Connection connection = null;
-		  try {
-			  connection = DriverManager.getConnection("jdbc:sqlite:C:/sqlite/inquiry.db");
-			  Statement statement = connection.createStatement();
-			  statement.setQueryTimeout(30);
-
-			  statement.executeUpdate(CREATE_INQUIRY_TABLE);
-			  PreparedStatement ps = connection.prepareStatement(INSERT_INQUIRY_TABLE);
-			  ps.setString(1, inquiryForm.getTitle());
-			  ps.setString(2, inquiryForm.getName());
-			  ps.setString(3, inquiryForm.getTel());
-			  ps.setString(4, inquiryForm.getContent());
-			  ps.executeUpdate();
-			  
-			  ResultSet rs = statement.executeQuery(SELECT_INQUIRY_ALL_RECORD);
-			  
-			  InquiryDto dto;
-			  while(rs.next()) {
-				  dto = new InquiryDto();
+		  // ラムダ式
+		  Function<ResultSet, InquiryDto> rambdaTest = rs -> {
+			  InquiryDto dto = new InquiryDto();
+			  try {
 				  dto.setId(rs.getInt("id"));
 				  dto.setTitle(rs.getString("title"));
 				  dto.setName(rs.getString("name"));
 				  dto.setTel(rs.getString("tel"));
 				  dto.setContent(rs.getString("content"));
-				  dtoList.add(dto);
-			  }
-			  
-		  } catch(SQLException e) {
-			  e.printStackTrace();
-		  } finally {
-			  try {
-				  if(connection != null) {
-					  connection.close();
-				  }
-			  } catch(SQLException e) {
+			  } catch (SQLException e) {
 				  e.printStackTrace();
 			  }
+			  
+			  return dto;
+		  };
+		  
+		  Class.forName("org.sqlite.JDBC");
+		  
+		  try (Connection conn = DriverManager.getConnection("jdbc:sqlite:C:/sqlite/inquiry.db")) {
+			  Statement statement = conn.createStatement();
+			  statement.setQueryTimeout(30);
+			  statement.executeUpdate(CREATE_INQUIRY_TABLE);
+			  
+			  PreparedStatement ps = conn.prepareStatement(INSERT_INQUIRY_TABLE);
+			  ps.setString(1, inquiryForm.getTitle());
+			  ps.setString(2, inquiryForm.getName());
+			  ps.setString(3, inquiryForm.getTel());
+			  ps.setString(4, inquiryForm.getContent());
+			  ps.executeUpdate();
+		  
+		  	  ResultSet rs = statement.executeQuery(SELECT_INQUIRY_ALL_RECORD);
+		  	  
+			  while(rs.next()) {
+				  dtoList.add(rambdaTest.apply(rs));
+			  }
+		  } catch (SQLException e) {
+			  e.printStackTrace();
 		  }
+		  
 		  req.setAttribute("list", dtoList);
 
 		  return mapping.findForward("success");
