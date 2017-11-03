@@ -29,53 +29,53 @@ public class SendInquiryAction extends Action {
 			"INSERT INTO inquiry (title, name, tel, content) VALUES(?, ?, ?, ?)";
 	private final String SELECT_INQUIRY_ALL_RECORD = "SELECT * FROM inquiry";
 
-	  @Override
-	  public ActionForward execute(ActionMapping mapping, ActionForm form,
-	      HttpServletRequest req, HttpServletResponse resp) throws Exception {
-		  InquiryForm inquiryForm = (InquiryForm)form;
-		  List<InquiryDto> dtoList = new ArrayList<>();
-		  
-		  // ラムダ式
-		  Function<ResultSet, InquiryDto> lambdaTest = rs -> {
-			  InquiryDto dto = new InquiryDto();
-			  try {
-				  dto.setId(rs.getInt("id"));
-				  dto.setTitle(rs.getString("title"));
-				  dto.setName(rs.getString("name"));
-				  dto.setTel(rs.getString("tel"));
-				  dto.setContent(rs.getString("content"));
-			  } catch (SQLException e) {
-				  e.printStackTrace();
-			  }
-			  
-			  return dto;
-		  };
-		  
-		  Class.forName("org.sqlite.JDBC");
-		  
-		  try (Connection conn = DriverManager.getConnection("jdbc:sqlite:C:/sqlite/inquiry.db")) {
-			  Statement statement = conn.createStatement();
-			  statement.setQueryTimeout(30);
-			  statement.executeUpdate(CREATE_INQUIRY_TABLE);
-			  
-			  PreparedStatement ps = conn.prepareStatement(INSERT_INQUIRY_TABLE);
-			  ps.setString(1, inquiryForm.getTitle());
-			  ps.setString(2, inquiryForm.getName());
-			  ps.setString(3, inquiryForm.getTel());
-			  ps.setString(4, inquiryForm.getContent());
-			  ps.executeUpdate();
-		  
-		  	  ResultSet rs = statement.executeQuery(SELECT_INQUIRY_ALL_RECORD);
-		  	  
-			  while(rs.next()) {
-				  dtoList.add(lambdaTest.apply(rs));
-			  }
-		  } catch (SQLException e) {
-			  e.printStackTrace();
-		  }
-		  
-		  req.setAttribute("list", dtoList);
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm form,
+	HttpServletRequest req, HttpServletResponse resp) throws Exception {
+		InquiryForm inquiryForm = (InquiryForm)form;
+		List<InquiryDto> dtoList = new ArrayList<>();
+		
+		// ラムダ式
+		Function<ResultSet, InquiryDto> lambdaTest = rs -> {
+			InquiryDto dto = new InquiryDto();
+			try {
+				dto.setId(rs.getInt("id"));
+				dto.setTitle(rs.getString("title"));
+				dto.setName(rs.getString("name"));
+				dto.setTel(rs.getString("tel"));
+				dto.setContent(rs.getString("content"));
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			return dto;
+		};
+		
+		Class.forName("org.sqlite.JDBC");
+		
+		try (Connection conn = DriverManager.getConnection("jdbc:sqlite:C:/sqlite/inquiry.db")) {
+			Statement statement = conn.createStatement();
+			statement.setQueryTimeout(30);
+			statement.executeUpdate(CREATE_INQUIRY_TABLE);
+			
+			PreparedStatement ps = conn.prepareStatement(INSERT_INQUIRY_TABLE);
+			ps.setString(1, inquiryForm.getTitle());
+			ps.setString(2, inquiryForm.getName());
+			ps.setString(3, inquiryForm.getTel());
+			ps.setString(4, inquiryForm.getContent());
+			ps.executeUpdate();
+		
+			ResultSet rs = statement.executeQuery(SELECT_INQUIRY_ALL_RECORD);
+			
+			while(rs.next()) {
+				dtoList.add(lambdaTest.apply(rs));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		req.setAttribute("list", dtoList);
 
-		  return mapping.findForward("success");
-	  }
+		return mapping.findForward("success");
+	}
 }
