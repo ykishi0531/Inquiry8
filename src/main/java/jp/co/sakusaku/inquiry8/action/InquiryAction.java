@@ -8,7 +8,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import jp.co.sakusaku.inquiry8.actionForm.InquiryForm;
+import jp.co.sakusaku.inquiry8.actionform.InquiryForm;
 
 public class InquiryAction extends Action {
 
@@ -16,7 +16,7 @@ public class InquiryAction extends Action {
 	  public ActionForward execute(ActionMapping mapping, ActionForm form,
 	      HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		  InquiryForm inquiryForm = (InquiryForm)form;
-		  
+
 		  req.setAttribute("form", inquiryForm);
 
 		  return mapping.findForward("success");

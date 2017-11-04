@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jp.co.sakusaku.inquiry8.actionForm.HelloForm;
+import jp.co.sakusaku.inquiry8.actionform.HelloForm;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;

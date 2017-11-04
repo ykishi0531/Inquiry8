@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE struts-config PUBLIC 
+<!DOCTYPE struts-config PUBLIC
            "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
            "http://struts.apache.org/dtds/struts-config_1_3.dtd">
 
@@ -9,9 +9,9 @@
   <!-- ================================================ Form Bean Definitions -->
 
   <form-beans>
-    <form-bean name="helloForm" type="jp.co.sakusaku.inquiry8.actionForm.HelloForm">
+    <form-bean name="helloForm" type="jp.co.sakusaku.inquiry8.actionform.HelloForm">
     </form-bean>
-    <form-bean name="inquiryForm" type="jp.co.sakusaku.inquiry8.actionForm.InquiryForm">
+    <form-bean name="inquiryForm" type="jp.co.sakusaku.inquiry8.actionform.InquiryForm">
     </form-bean>
   </form-beans>
 
