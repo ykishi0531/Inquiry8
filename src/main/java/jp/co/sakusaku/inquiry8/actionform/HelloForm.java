@@ -1,4 +1,4 @@
-package jp.co.sakusaku.inquiry8.actionForm;
+package jp.co.sakusaku.inquiry8.actionform;
 
 import java.util.Date;
 
